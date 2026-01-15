@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קבוצת עוז הדר | ניהול כוח אדם</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== הגדרות עיצוב (CSS) ===== */
+        :root {
+            --bg-body: #f5f5f7;
+            --bg-card: #ffffff;
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #0071e3;
+            --accent-dark: #005bb5;
+            --border: rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.02);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.08);
+            --font-main: 'Inter', 'Heebo', sans-serif;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-main); background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; overflow-x: hidden; margin: 0; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        img { display: block; max-width: 100%; }
+
+        /* ניווט */
+        .nav { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 999; border-bottom: 1px solid var(--border); transition: 0.3s; }
+        .nav-container { max-width: 1200px; margin: 0 auto; height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-logo-text { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; color: var(--text-main); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-link { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+        .nav-link:hover { color: var(--accent); }
+        .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .mobile-menu-btn span { width: 25px; height: 2px; background: var(--text-main); display: block; transition: 0.3s; }
+
+        /* Hero Section */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 60px; position: relative; overflow: hidden; }
+        .hero-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 40px; position: relative; z-index: 2; }
+        .hero-label { font-size: 14px; font-weight: 600; color: var(--accent); background: rgba(0,113,227,0.1); padding: 5px 15px; border-radius: 20px; margin-bottom: 10px; display: inline-block; }
+        .hero-title { font-size: clamp(40px, 6vw, 72px); line-height: 1.1; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 20px; background: linear-gradient(135deg, #1d1d1f 0%, #434344 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: clamp(18px, 3vw, 22px); color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-weight: 400; }
+        
+        .hero-actions { display: flex; gap: 15px; margin-top: 10px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; border-radius: 30px; font-size: 16px; font-weight: 600; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--text-main); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-primary:hover { background: #000; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .btn-secondary { background: white; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--text-main); }
+
+        .hero-stats { display: flex; gap: 50px; margin-top: 40px; text-align: center; }
+        .stat-item { display: flex; flex-direction: column; }
+        .stat-number { font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; }
+        .stat-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; margin-top: 5px; }
+
+        /* Hero Visual (Abstract) */
+        .hero-visual { margin-top: 60px; width: 100%; max-width: 900px; height: 400px; background: white; border-radius: 24px; box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid var(--border); overflow: hidden; }
+        .abstract-circle { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.6; }
+        .c1 { width: 300px; height: 300px; background: #e0f2fe; top: -50px; left: -50px; }
+        .c2 { width: 250px; height: 250px; background: #f0fdf4; bottom: -50px; right: -50px; }
+        .hero-visual-content { position: relative; z-index: 2; text-align: center; }
+        .visual-icon { width: 64px; height: 64px; margin: 0 auto 20px; color: var(--text-main); }
+
+        /* General Section */
+        .section { padding: 100px 20px; }
+        .bg-white { background: var(--bg-card); }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header { max-width: 700px; margin-bottom: 60px; }
+        .section-title { font-size: 36px; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
+        .section-desc { font-size: 18px; color: var(--text-secondary); }
+
+        /* About Grid */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        
+        /* Timeline */
+        .timeline { position: relative; padding-right: 30px; border-right: 2px solid var(--border); }
+        .timeline-item { position: relative; margin-bottom: 50px; }
+        .timeline-item::after { content: ''; position: absolute; right: -36px; top: 5px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; border: 4px solid white; box-shadow: 0 0 0 1px var(--border); }
+        .year { font-size: 14px; font-weight: 800; color: var(--accent); display: block; margin-bottom: 5px; }
+        .timeline-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+        .timeline-content p { color: var(--text-secondary); font-size: 15px; }
+
+        /* Sticky About Text */
+        .sticky-wrapper { position: sticky; top: 120px; }
+        .sticky-wrapper h3 { font-size: 32px; font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
+        .check-list li { position: relative; padding-right: 30px; margin-bottom: 15px; color: var(--text-secondary); }
+        .check-list li::before { content: '✓'; position: absolute; right: 0; color: var(--accent); font-weight: bold; }
+
+        /* Grid Layouts */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        /* Cards */
+        .card { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border); transition: 0.3s; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(0,0,0,0.05); }
+        .card-icon { font-size: 32px; margin-bottom: 20px; }
+        .card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .card-role { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); font-weight: 600; margin-bottom: 15px; }
+        .card p { color: var(--text-secondary); font-size: 15px; flex-grow: 1; }
+        
+        /* Link Card Style */
+        .card-link { border: 1px solid var(--accent); position: relative; overflow: hidden; }
+        .card-link::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); }
+        .link-text { color: var(--accent); font-weight: 600; font-size: 14px; margin-top: 20px; display: inline-flex; align-items: center; gap: 5px; }
+
+        /* Team */
+        .team-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; }
+        .team-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .team-img-box { width: 100%; height: 300px; background: #e5e5e5; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .team-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .team-card:hover .team-img { transform: scale(1.05); }
+        .team-info { padding: 25px; }
+        .team-info h3 { font-size: 18px; margin-bottom: 5px; }
+        .team-info span { color: var(--text-secondary); font-size: 14px; font-weight: 500; }
+
+        /* Contact */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; }
+        .contact-info-box { display: flex; flex-direction: column; gap: 30px; }
+        .info-item { display: flex; gap: 15px; }
+        .info-icon { width: 40px; height: 40px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .info-content strong { display: block; font-size: 14px; margin-bottom: 3px; }
+        .info-content p, .info-content a { color: var(--text-secondary); font-size: 15px; }
+        
+        .contact-form { background: white; padding: 40px; border-radius: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; font-size: 15px; transition: 0.2s; background: #fafafa; }
+        .form-control:focus { outline: none; border-color: var(--accent); background: white; }
+        .submit-btn { width: 100%; padding: 14px; background: var(--text-main); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: black; }
+
+        .map-frame { width: 100%; height: 250px; border-radius: 20px; overflow: hidden; margin-top: 30px; border: 1px solid var(--border); }
+
+        /* Footer */
+        .footer { padding: 50px 20px; border-top: 1px solid var(--border); background: white; font-size: 14px; color: var(--text-secondary); }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero-title { font-size: 36px; }
+            .hero-stats { flex-direction: column; gap: 20px; }
+            .stat-divider { display: none; }
+            .about-grid, .contact-grid, .grid-3, .team-grid { grid-template-columns: 1fr; }
+            .timeline { border-right: none; border-left: 2px solid var(--border); padding-right: 0; padding-left: 30px; }
+            .timeline-item::after { right: auto; left: -36px; }
+            .hero { padding-top: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="nav-logo-text">Oz Hadar Group</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">אודות</a></li>
+                <li><a href="#companies" class="nav-link">החברות</a></li>
+                <li><a href="#industries" class="nav-link">תחומים</a></li>
+                <li><a href="#contact" class="nav-link">צור קשר</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero" id="hero">
+        <div class="abstract-circle c1"></div>
+        <div class="abstract-circle c2"></div>
+        
+        <div class="hero-container">
+            <div class="hero-content reveal">
+                <div class="hero-label">מאז 1990</div>
+                <h1 class="hero-title">ניהול כוח אדם<br>בסטנדרט הגבוה ביותר</h1>
+                <p class="hero-subtitle">
+                    קבוצת עוז הדר מספקת פתרונות עילית לניהול עובדים בענפי החקלאות, הבנייה, מסחר ושירותים והתעשייה.
+                </p>
+                <div class="hero-actions">
+                    <a href="#about" class="btn btn-primary">למד עוד</a>
+                    <a href="#contact" class="btn btn-secondary">צור קשר</a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="35">0</div>
+                        <div class="stat-label">שנות מצוינות</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="1000">0</div>
+                        <div class="stat-label">עובדים מנוהלים</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="6">0</div>
+                        <div class="stat-label">חברות בקבוצה</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual reveal">
+                <div class="hero-visual-content">
+                    <svg class="visual-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    <h3>התמחות רב-תחומית</h3>
+                    <p style="color:var(--text-secondary); max-width:300px; margin: 10px auto;">חקלאות • בנייה • מסחר • תעשייה</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bg-white" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">הסיפור שלנו</h2>
+                <p class="section-desc">למעלה מ-3 עשורים של הובלה, חדשנות ואמינות.</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="timeline reveal">
+                    <div class="timeline-item">
+                        <span class="year">1990</span>
+                        <div class="timeline-content">
+                            <h3>הקמת הקבוצה</h3>
+                            <p>תחילת הפעילות בתחום כוח האדם בישראל.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year">2001</span>
+                        <div class="timeline-content">
+                            <h3>פ.ל.ח (מרום)</h3>
+                            <p>כניסה והתרחבות משמעותית לענף הבנייה.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year">2003</span>
+                        <div class="timeline-content">
+                            <h3>עוז הדר בחקלאות</h3>
+                            <p>התרחבות בתפעול חקלאות לבתי אריזה ומשקים.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year">2009</span>
+                        <div class="timeline-content">
+                            <h3>אסף (מרום) נכסים</h3>
+                            <p>הקמת זרוע ייעודית לענפי המסחר והשירותים.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="year">2023</span>
+                        <div class="timeline-content">
+                            <h3>WAF & SAP H.A.G</h3>
+                            <p>הקמת זרוע גיוס בינלאומית וקבלת רישיון תאגיד בנייה.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sticky-wrapper reveal">
+                    <h3>מקצועיות ללא פשרות.</h3>
+                    <p style="color:var(--text-secondary); margin-bottom:20px;">
+                        קבוצת עוז הדר הוקמה מתוך חזון לספק מעטפת שירותים מלאה ומקצועית. אנחנו לא רק מספקים עובדים, אנחנו מספקים שקט תעשייתי.
+                    </p>
+                    <ul class="check-list">
+                        <li>פריסה ארצית מלאה</li>
+                        <li>תאגיד מורשה רשות האוכלוסין</li>
+                        <li>שותפות אסטרטגית עם הלקוח</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="companies">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">החברות בקבוצה</h2>
+                <p class="section-desc">מערך של 6 חברות המתמחות במתן פתרונות מדויקים.</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="card reveal">
+                    <div class="card-icon">🌱</div>
+                    <h3>עוז הדר בחקלאות</h3>
+                    <p class="card-role">מאז 2003</p>
+                    <p>ניהול ותפעול עובדי חקלאות. מעסיקה כ-1000 עובדים ומנהלת 50,000 דונם עבור חברות מובילות.</p>
+                </div>
+                
+                <div class="card reveal">
+                    <div class="card-icon">🏗️</div>
+                    <h3>פ.ל.ח (מרום)</h3>
+                    <p class="card-role">מאז 2001</p>
+                    <p>אספקת עובדים לענף הבנייה. עובדת עם קבלנים מובילים במשק בפרויקטים של תשתיות לאומיות.</p>
+                </div>
+                
+                <div class="card reveal">
+                    <div class="card-icon">🌍</div>
+                    <h3>WAF</h3>
+                    <p class="card-role">מאז 2023</p>
+                    <p>זרוע גיוס בינלאומית. איתור, מיון והכשרה של כוח אדם איכותי במדינות המוצא.</p>
+                </div>
+                
+                <a href="https://www.gov.il/BlobFolder/policy/authorized_corp_constructions/he/auth_corps_2025.pdf" target="_blank" class="card card-link reveal">
+                    <div class="card-icon">👷</div>
+                    <h3>SAP H.A.G</h3>
+                    <p class="card-role">מאז 2023</p>
+                    <p>תאגיד מורשה לייבוא עובדים זרים לענף הבנייה. עמידה בסטנדרטים המחמירים ביותר.</p>
+                    <span class="link-text">צפה ברישיון תאגיד ↗</span>
+                </a>
+                
+                <div class="card reveal">
+                    <div class="card-icon">💼</div>
+                    <h3>אסף (מרום) נכסים</h3>
+                    <p class="card-role">מאז 2009</p>
+                    <p>פתרונות כוח אדם לענפי המסחר והשירותים. התמחות בגיוס מהיר ויעיל למגזר העסקי.</p>
+                </div>
+                
+                <div class="card reveal">
+                    <div class="card-icon">🏢</div>
+                    <h3>נדל"ן בינלאומי</h3>
+                    <p class="card-role">מאז 2008</p>
+                    <p>פורטפוליו של 34 נכסים מניבים בגרמניה המהווים עוגן פיננסי יציב וחזק לפעילות הקבוצה.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <h2 class="section-title">צור קשר</h2>
+                    <p class="section-desc" style="margin-bottom: 30px;">נשמח לעמוד לשירותכם.</p>
+                    
+                    <div class="contact-info-box">
+                        <div class="info-item">
+                            <div class="info-icon">📍</div>
+                            <div class="info-content">
+                                <strong>כתובת המשרד</strong>
+                                <p>רחוב תרשיש 25, מתחם רכבת, קיסריה</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">📞</div>
+                            <div class="info-content">
+                                <strong>טלפון</strong>
+                                <p><a href="tel:048134363">04-8134363</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">✉️</div>
+                            <div class="info-content">
+                                <strong>דוא"ל</strong>
+                                <p><a href="mailto:Hodaya@Sapco.co.il">Hodaya@Sapco.co.il</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="map-frame">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=Tarshish+25+Caesarea&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                            width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label>שם מלא</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>טלפון</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>דוא"ל</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>הודעה</label>
+                            <textarea rows="4" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">שלח הודעה</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <span style="font-weight: 700; color: var(--text-main);">Oz Hadar Group</span>
+            <p>© 2025 כל הזכויות שמורות.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ניווט במובייל
+        function toggleMenu() {
+            const links = document.querySelector('.nav-links');
+            if (links.style.display === 'flex') {
+                links.style.display = 'none';
+            } else {
+                links.style.display = 'flex';
+                links.style.flexDirection = 'column';
+                links.style.position = 'absolute';
+                links.style.top = '60px';
+                links.style.left = '0';
+                links.style.width = '100%';
+                links.style.background = 'white';
+                links.style.padding = '20px';
+                links.style.borderBottom = '1px solid #eee';
+            }
+        }
+
+        // אנימציית גלילה (Reveal)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // אנימציית מספרים
+        const counters = document.querySelectorAll('.stat-number');
+        const runCounter = (counter) => {
+            const target = +counter.getAttribute('data-target');
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            const update = () => {
+                current += step;
+                if (current < target) {
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(update);
+                } else {
+                    counter.innerText = target + "+";
+                }
+            };
+            update();
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    runCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // שליחת טופס (דמה)
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ נשלח בהצלחה';
+            btn.style.background = '#10b981';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                this.reset();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
